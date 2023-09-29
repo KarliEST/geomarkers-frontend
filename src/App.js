@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import LocationsMap from './components/LocationsMap';
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div style={{
+            border: "2px solid red",
+            display: "flex",
+            flexDirection: "row",
+            width: "100vh",
+            height: "100vh"
+        }}>
+            <div style={{border: "2px solid red", width:"100vw", height:"100vh"}}>
+                <LocationsMap/>
+            </div>
+        </div>
+    );
 }
 
 export default App;
