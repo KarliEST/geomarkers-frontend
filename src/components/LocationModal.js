@@ -42,7 +42,10 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
 
     return (
         <div>
-            <Modal isOpen={modal} toggle={toggle}>
+            <Modal
+                size={"sm"}
+                isOpen={modal}
+                toggle={toggle}>
                 <ModalHeader toggle={toggle}>Uue leiukoha sisestamine</ModalHeader>
                 <ModalBody>
                     <Form
@@ -56,16 +59,15 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
                             onChange={event => {
                                 setInputDescription(event.target.value);
                             }}
-                            rows={5}
-                            cols={30}
+                            rows={3}
                             id={"description"}
                             name={"description"}
                         />
                     </Form>
                     <p>
-                        Latitude: {coordinates.lat.toFixed(2)}
+                        Laiuskraad: {coordinates.lat.toFixed(2)}
                         <br/>
-                        Longitude: {coordinates.lng.toFixed(2)}
+                        Pikkuskraad: {coordinates.lng.toFixed(2)}
                     </p>
                 </ModalBody>
                 <ModalFooter>
@@ -75,7 +77,9 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
                     }}>
                         Sisesta
                     </Button>
-                    <Button color="secondary" onClick={toggle}>
+                    <Button color="secondary" onClick={() => {
+                        toggle()
+                    }}>
                         Tühista
                     </Button>
                 </ModalFooter>

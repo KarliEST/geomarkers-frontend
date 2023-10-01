@@ -20,6 +20,7 @@ export default function LocationsMap() {
     const [modal, setModal] = useState(false);
     const [coord, setCoord] = useState({"lat": 0, "lng": 0});
     const [pointData, setPointData] = useState();
+    const [pointId, setPointId] = useState(0);
 
     const toggle = () => setModal(!modal);
 
@@ -31,11 +32,12 @@ export default function LocationsMap() {
                 setCoordinates(e.latlng);
                 toggle();
             },
+
         });
         return null;
     };
 
-    const fetchPoints=()=> {
+    const fetchPoints = () => {
         axios.get("/get")
             .then(response => {
                 setPointData(response.data);
@@ -61,7 +63,6 @@ export default function LocationsMap() {
                 attribution='&copy; <a href="https://www.maaamet.ee/">Maa-amet</a> contributors'
                 url="https://tiles.maaamet.ee/tm/wmts?&service=WMTS&request=GetTile&version=1.0.0&layers=&styles=&tilematrixSet=GMC&format=image%2Fpng&height=256&width=256&layer=kaart&tilematrix={z}&tilerow={y}&tilecol={x}"
             />
-            {/*<GeoJSON data={estJson.features}/>*/}
             {pointData.features.map((feature, index) => {
                 return (
                     <FeatureGroup color="purple" key={index}>
@@ -71,18 +72,36 @@ export default function LocationsMap() {
                                 feature.geometry.coordinates[0]
                             ]}
                             icon={getIcon()}
+                            eventHandlers={{
+                                click: () => {
+                                    setPointId(feature.properties.id)
+                                }
+                            }}
                         >
-                            <Popup>{feature.properties.description}</Popup>
+                            <Popup maxWidth={120}>
+                                Sissekanne: {pointId}
+                                <p style={{"overflowWrap": "break-word"}}>
+                                    Kirjeldus:<br/>
+                                    {feature.properties.description}
+                                </p>
+                                <p>
+                                    Laiuskraad: {feature.geometry.coordinates[1].toFixed(2)}
+                                    <br/>
+                                    Pikkuskraad: {feature.geometry.coordinates[0].toFixed(2)}
+                                </p>
+                            </Popup>
                         </Marker>
                     </FeatureGroup>
                 );
             })}
-            <LocationModal
-                modal={modal}
-                toggle={toggle}
-                coordinates={coord}
-                fetch={fetchPoints}
-            />
+            {modal &&
+                <LocationModal
+                    modal={modal}
+                    toggle={toggle}
+                    coordinates={coord}
+                    fetch={fetchPoints}
+                />
+            }
             <LocationMarker/>
         </MapContainer>
     );
