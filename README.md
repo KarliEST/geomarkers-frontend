@@ -1,4 +1,4 @@
-# CURRENCY EXCHANGE PROJECT
+# GEOLOCATION PROJECT
 
 ### Project author: Karli Kullasepp.
 
