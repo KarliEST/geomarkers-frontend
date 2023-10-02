@@ -40,6 +40,14 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
             })
     };
 
+    const checkDescription = () => {
+        if (inputDescription.trim().length === 0) {
+            return false;
+        } else {
+            return true
+        }
+    }
+
     return (
         <div>
             <Modal
@@ -72,8 +80,12 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" onClick={() => {
-                        toggle();
-                        postLocation();
+                        if (checkDescription()) {
+                            toggle();
+                            postLocation();
+                        } else {
+                            alert("Kirjeldus on puudulik");
+                        }
                     }}>
                         Sisesta
                     </Button>
