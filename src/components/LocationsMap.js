@@ -56,7 +56,7 @@ export default function LocationsMap() {
     return (
         <MapContainer
             center={position}
-            maxBounds={[[57, 21], [60, 29]]}
+            maxBounds={[[57, 21], [61, 29]]}
             maxBoundsViscosity={1}
             zoom={7}
             minZoom={7}
