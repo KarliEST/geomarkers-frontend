@@ -41,11 +41,7 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
     };
 
     const checkDescription = () => {
-        if (inputDescription.trim().length === 0) {
-            return false;
-        } else {
-            return true
-        }
+        return inputDescription.trim().length !== 0;
     }
 
     return (
