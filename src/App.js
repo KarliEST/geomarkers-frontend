@@ -12,9 +12,9 @@ function App() {
             height: "100vh"
         }}>
             <h1 className={"header"}>SEENTE LEIUKOHTADE KAART</h1>
-            <p className={"map-container"}>
+            <div className={"map-container"}>
                 <LocationsMap/>
-            </p>
+            </div>
         </div>
     );
 }
