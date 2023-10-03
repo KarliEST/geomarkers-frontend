@@ -26,7 +26,7 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
 
     const postLocation = () => {
         let geoJson = createJson();
-        axios.post("/add", geoJson)
+        axios.post("/post", geoJson)
             .then(response => {
                 if (response.status !== 200) {
                     alert("Midagi läks valesti");
