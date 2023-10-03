@@ -38,7 +38,7 @@ export default function LocationsMap() {
     };
 
     const fetchPoints = () => {
-        axios.get("/get")
+        axios.get("/all")
             .then(response => {
                 setPointData(response.data);
             })
