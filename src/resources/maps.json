@@ -1,0 +1,12 @@
+[
+  {
+    "name": "OpenStreetMap",
+    "attribution": "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+    "mapUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+  },
+  {
+    "name": "Maa-amet",
+    "attribution": "&copy; <a href=\"https://www.maaamet.ee/\">Maa-amet</a> contributors",
+    "mapUrl": "https://tiles.maaamet.ee/tm/wmts?&service=WMTS&request=GetTile&version=1.0.0&layers=&styles=&tilematrixSet=GMC&format=image%2Fpng&height=256&width=256&layer=kaart&tilematrix={z}&tilerow={y}&tilecol={x}"
+  }
+]

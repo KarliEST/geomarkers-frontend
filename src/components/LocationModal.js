@@ -29,7 +29,7 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
         axios.post("/post", geoJson)
             .then(response => {
                 if (response.status !== 200) {
-                    alert("Midagi läks valesti");
+                    alert("Something went wrong!");
                 }
                 if (response.status === 200) {
                     fetch();
@@ -50,13 +50,13 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
                 size={"sm"}
                 isOpen={modal}
                 toggle={toggle}>
-                <ModalHeader toggle={toggle}>Uue leiukoha sisestamine</ModalHeader>
+                <ModalHeader toggle={toggle}>Enter new marker</ModalHeader>
                 <ModalBody>
                     <Form
                         style={{display: "flex", flexDirection: "column"}}
                     >
                         <Label for={"description"}>
-                            Kirjeldus:
+                            Description:
                         </Label>
                         <textarea
                             value={inputDescription}
@@ -69,9 +69,9 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
                         />
                     </Form>
                     <p>
-                        Laiuskraad: {coordinates.lat.toFixed(2)}
+                        Latitude: {coordinates.lat.toFixed(2)}
                         <br/>
-                        Pikkuskraad: {coordinates.lng.toFixed(2)}
+                        Longitude: {coordinates.lng.toFixed(2)}
                     </p>
                 </ModalBody>
                 <ModalFooter>
@@ -80,15 +80,13 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
                             toggle();
                             postLocation();
                         } else {
-                            alert("Kirjeldus on puudulik");
+                            alert("Incorrect description");
                         }
                     }}>
-                        Sisesta
+                        Submit
                     </Button>
-                    <Button color="secondary" onClick={() => {
-                        toggle()
-                    }}>
-                        Tühista
+                    <Button color="secondary" onClick={toggle}>
+                        Cancel
                     </Button>
                 </ModalFooter>
             </Modal>
