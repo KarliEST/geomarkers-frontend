@@ -8,7 +8,7 @@
 * Requests are made, using Axios.
 * Project is configured to use [proxy port: 8080](package.json)
 
-
+### NB! To run the project correctly, back-end project: https://github.com/KarliEST/geolocator-backend must be running on port: 8080.
 ### NB! Project is configured to use proxy port: 8080.
 
 Before starting the project run:
