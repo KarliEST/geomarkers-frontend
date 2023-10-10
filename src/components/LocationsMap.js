@@ -13,9 +13,8 @@ function getIcon(_iconSize) {
     })
 }
 
-
-export default function LocationsMap() {
-    const position = [58.66, 25.05]
+export default function LocationsMap({mapUrl, attribution}) {
+    const position = [58.66, 25.05];
 
     const [modal, setModal] = useState(false);
     const [coord, setCoord] = useState({"lat": 0, "lng": 0});
@@ -51,7 +50,7 @@ export default function LocationsMap() {
         fetchPoints();
     }, [])
 
-    if (!pointData) return <div>Laeb...</div>;
+    if (!pointData) return <div>Loading...</div>;
 
     return (
         <MapContainer
@@ -62,12 +61,12 @@ export default function LocationsMap() {
             minZoom={7}
             style={{width: "100%", height: "100%"}}>
             <TileLayer
-                attribution='&copy; <a href="https://www.maaamet.ee/">Maa-amet</a> contributors'
-                url="https://tiles.maaamet.ee/tm/wmts?&service=WMTS&request=GetTile&version=1.0.0&layers=&styles=&tilematrixSet=GMC&format=image%2Fpng&height=256&width=256&layer=kaart&tilematrix={z}&tilerow={y}&tilecol={x}"
+                attribution={attribution}
+                url={mapUrl}
             />
-            {pointData.features.map((feature, index) => {
+            {pointData.features.map((feature) => {
                 return (
-                    <FeatureGroup color="purple" key={index}>
+                    <FeatureGroup key={feature.properties.id}>
                         <Marker
                             position={[
                                 feature.geometry.coordinates[1],
@@ -81,15 +80,15 @@ export default function LocationsMap() {
                             }}
                         >
                             <Popup maxWidth={120}>
-                                Sissekanne: {pointId}
+                                Entry ID: {pointId}
                                 <p style={{"overflowWrap": "break-word"}}>
-                                    Kirjeldus:<br/>
+                                    Description:<br/>
                                     {feature.properties.description}
                                 </p>
                                 <p>
-                                    Laiuskraad: {feature.geometry.coordinates[1].toFixed(2)}
+                                    Latitude: {feature.geometry.coordinates[1].toFixed(2)}
                                     <br/>
-                                    Pikkuskraad: {feature.geometry.coordinates[0].toFixed(2)}
+                                    Longitude: {feature.geometry.coordinates[0].toFixed(2)}
                                 </p>
                             </Popup>
                         </Marker>
