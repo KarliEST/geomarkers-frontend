@@ -1,0 +1,9 @@
+.popup {
+    width: 200px;
+    background-color: azure;
+    height: 4rem;
+    overflow-wrap: break-word;
+    overflow-y: scroll;
+}
+
+

@@ -17,7 +17,7 @@ const LocationModal = ({modal, toggle, coordinates, fetch}) => {
                     },
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [coordinates.lat, coordinates.lng]
+                        "coordinates": [coordinates.lng, coordinates.lat]
                     }
                 }
             ]
