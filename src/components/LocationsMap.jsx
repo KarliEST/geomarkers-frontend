@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {FeatureGroup, MapContainer, Marker, Popup, TileLayer, useMapEvents} from 'react-leaflet';
+import {FeatureGroup, MapContainer, Marker, TileLayer, useMapEvents} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import '../styles.css';
 import L from 'leaflet';
 import LocationModal from './LocationModal';
+import PopupComponent from './PopupComponent';
 
 function getIcon(_iconSize) {
     return L.icon({
@@ -19,8 +20,7 @@ export default function LocationsMap({mapUrl, attribution}) {
     const [modal, setModal] = useState(false);
     const [coord, setCoord] = useState({"lat": 0, "lng": 0});
     const [pointData, setPointData] = useState();
-    const [pointId, setPointId] = useState(0);
-
+    const [locationJson, setLocationJson] = useState({});
     const toggle = () => setModal(!modal);
 
     const setCoordinates = (coordinates) => setCoord(coordinates);
@@ -45,6 +45,22 @@ export default function LocationsMap({mapUrl, attribution}) {
                 console.log(error)
             })
     }
+    const fetchLocationById = (id) => {
+        axios.get("/get", {params: {id: id}})
+            .then(response => {
+                if (response.status !== 200) {
+                    alert("Something went wrong!");
+                }
+                if (response.status === 200) {
+                    // console.log(response.data)
+                    // console.log(response.data.features[0].properties.description)
+                    setLocationJson(response.data)
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    };
 
     useEffect(() => {
         fetchPoints();
@@ -75,22 +91,15 @@ export default function LocationsMap({mapUrl, attribution}) {
                             icon={getIcon()}
                             eventHandlers={{
                                 click: () => {
-                                    setPointId(feature.properties.id)
+                                    fetchLocationById(feature.properties.id);
                                 }
                             }}
                         >
-                            <Popup maxWidth={120}>
-                                Entry ID: {pointId}
-                                <p style={{"overflowWrap": "break-word"}}>
-                                    Description:<br/>
-                                    {feature.properties.description}
-                                </p>
-                                <p>
-                                    Latitude: {feature.geometry.coordinates[1].toFixed(2)}
-                                    <br/>
-                                    Longitude: {feature.geometry.coordinates[0].toFixed(2)}
-                                </p>
-                            </Popup>
+                            <PopupComponent
+                                locationJson={locationJson}
+                                feature={feature}
+                                fetch={fetchPoints}
+                            />
                         </Marker>
                     </FeatureGroup>
                 );
