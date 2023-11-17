@@ -82,10 +82,6 @@ const PopupComponent = ({feature, locationJson, fetch}) => {
                         handleClick={handleChange}
                     />
                 </div>
-                <div>
-                    Debug id: {feature.properties.id}<br/>
-                    Debug description: {inputDescription}
-                </div>
                 {modal &&
                     <ModalComponent
                         name={"Change description"}
