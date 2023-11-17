@@ -4,10 +4,8 @@ import {ButtonComponent} from './ButtonComponent';
 import axios from 'axios';
 import "./PopupComponent.css"
 import ModalComponent from './ModalComponent';
-import {Input} from 'reactstrap';
 
 const PopupComponent = ({feature, locationJson, fetch}) => {
-    const [inputDescription, setInputDescription] = useState(feature.properties.description);
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
 
