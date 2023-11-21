@@ -1,32 +1,31 @@
 import {Popup} from 'react-leaflet';
 import React, {useState} from 'react';
-import {ButtonComponent} from './ButtonComponent';
+import ButtonComponent from './ButtonComponent';
 import axios from 'axios';
 import "./PopupComponent.css"
 import ModalComponent from './ModalComponent';
 
-const PopupComponent = ({feature, locationJson, fetch}) => {
+export default function PopupComponent({feature, locationJson, fetch}) {
     const [modal, setModal] = useState(false);
-    const toggle = () => setModal(!modal);
 
+    function toggle() {
+        setModal(!modal);
+    }
 
-    const handleChange = () => {
+    function handleChange() {
         setModal(true);
-        console.log("change");
-    };
+    }
 
-    const handleDelete = () => {
+    function handleDelete() {
         deleteLocation();
-        console.log("delete");
-    };
+    }
 
-    const handleSubmit = (description) => {
+    function handleSubmit(description) {
         locationJson.features[0].properties.description = description;
         updateLocation(locationJson);
-        console.log("Done!");
-    };
+    }
 
-    const deleteLocation = () => {
+    function deleteLocation() {
         axios.delete("/delete", {params: {id: feature.properties.id}})
             .then(response => {
                 if (response.status !== 200) {
@@ -38,9 +37,10 @@ const PopupComponent = ({feature, locationJson, fetch}) => {
             })
             .catch(error => {
                 console.log(error)
-            })
-    };
-    const updateLocation = (json) => {
+            });
+    }
+
+    function updateLocation(json) {
         axios.put("/put", json, {params: {id: feature.properties.id}})
             .then(response => {
                 if (response.status !== 200) {
@@ -52,8 +52,8 @@ const PopupComponent = ({feature, locationJson, fetch}) => {
             })
             .catch(error => {
                 console.log(error)
-            })
-    };
+            });
+    }
 
     return (
         <>
@@ -85,12 +85,15 @@ const PopupComponent = ({feature, locationJson, fetch}) => {
                         name={"Change description"}
                         handleSubmit={handleSubmit}
                         description={feature.properties.description}
-                        modal={modal}
+                        coordinates={{
+                            "lat": feature.geometry.coordinates[1],
+                            "lng": feature.geometry.coordinates[0]
+                        }}
                         toggle={toggle}
+                        modal={modal}
                     />
                 }
             </Popup>
         </>
     )
 }
-export default PopupComponent

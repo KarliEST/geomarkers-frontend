@@ -4,39 +4,43 @@ import {FeatureGroup, MapContainer, Marker, TileLayer, useMapEvents} from 'react
 import 'leaflet/dist/leaflet.css';
 import '../styles.css';
 import L from 'leaflet';
-import LocationModal from './LocationModal';
 import PopupComponent from './PopupComponent';
+import ModalComponent from './ModalComponent';
 
 function getIcon(_iconSize) {
     return L.icon({
         iconUrl: require("../icons/map-marker-2-16.png"),
         iconSize: _iconSize
-    })
+    });
 }
 
 export default function LocationsMap({mapUrl, attribution}) {
     const position = [58.66, 25.05];
-
     const [modal, setModal] = useState(false);
     const [coord, setCoord] = useState({"lat": 0, "lng": 0});
     const [pointData, setPointData] = useState();
     const [locationJson, setLocationJson] = useState({});
-    const toggle = () => setModal(!modal);
+    let inputDescription = "";
 
-    const setCoordinates = (coordinates) => setCoord(coordinates);
+    function toggle() {
+        setModal(!modal);
+    }
 
-    const LocationMarker = () => {
+    function setCoordinates(coordinates) {
+        setCoord(coordinates)
+    }
+
+    function LocationMarker() {
         useMapEvents({
             click(e) {
                 setCoordinates(e.latlng);
                 toggle();
             },
-
         });
         return null;
-    };
+    }
 
-    const fetchPoints = () => {
+    function fetchPoints() {
         axios.get("/all")
             .then(response => {
                 setPointData(response.data);
@@ -45,22 +49,59 @@ export default function LocationsMap({mapUrl, attribution}) {
                 console.log(error)
             })
     }
-    const fetchLocationById = (id) => {
+
+    function fetchLocationById(id) {
         axios.get("/get", {params: {id: id}})
             .then(response => {
                 if (response.status !== 200) {
                     alert("Something went wrong!");
                 }
                 if (response.status === 200) {
-                    // console.log(response.data)
-                    // console.log(response.data.features[0].properties.description)
                     setLocationJson(response.data)
                 }
             })
             .catch(error => {
                 console.log(error)
             })
-    };
+    }
+
+    function createJson(description) {
+        return {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "description": description.replace(/\r?\n/g, " "),
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [coord.lng, coord.lat]
+                    }
+                }
+            ]
+        };
+    }
+
+    function postLocation(description) {
+        let geoJson = createJson(description);
+        axios.post("/post", geoJson)
+            .then(response => {
+                if (response.status !== 200) {
+                    alert("Something went wrong!");
+                }
+                if (response.status === 200) {
+                    fetchPoints();
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    function handleSubmit(description) {
+        postLocation(description);
+    }
 
     useEffect(() => {
         fetchPoints();
@@ -105,11 +146,13 @@ export default function LocationsMap({mapUrl, attribution}) {
                 );
             })}
             {modal &&
-                <LocationModal
+                <ModalComponent
+                    name={"Enter new marker"}
                     modal={modal}
                     toggle={toggle}
                     coordinates={coord}
-                    fetch={fetchPoints}
+                    description={inputDescription}
+                    handleSubmit={handleSubmit}
                 />
             }
             <LocationMarker/>

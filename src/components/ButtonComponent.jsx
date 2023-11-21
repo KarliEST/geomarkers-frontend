@@ -1,7 +1,7 @@
 import {Button} from 'react-bootstrap';
 import React from 'react';
 
-export function ButtonComponent({variant, name, handleClick}) {
+export default function ButtonComponent({variant, name, handleClick}) {
     return (
         <Button
             variant={variant}
