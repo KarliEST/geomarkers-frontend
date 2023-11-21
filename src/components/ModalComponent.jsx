@@ -1,14 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Input, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
-import {ButtonComponent} from './ButtonComponent';
+import ButtonComponent from './ButtonComponent';
 
-export const ModalComponent = ({name, toggle, modal, handleSubmit, description}) => {
-    let input = description;
+export default function ModalComponent({name, toggle, modal, handleSubmit, description, coordinates}) {
+    const [input, setInput] = useState("");
 
-    const handleChange = () => {
-        handleSubmit(input);
-        toggle();
-    };
+    function checkDescription() {
+        return input.trim().length !== 0;
+    }
+
+    function handleChange() {
+        if (checkDescription()) {
+            handleSubmit(input);
+            toggle();
+        } else {
+            alert("Incorrect description");
+        }
+    }
 
     const handleCancel = () => {
         toggle();
@@ -20,15 +28,20 @@ export const ModalComponent = ({name, toggle, modal, handleSubmit, description})
                 <ModalHeader toggle={toggle}>{name}</ModalHeader>
                 <ModalBody>
                     <Input
-                        defaultValue={input}
+                        defaultValue={description}
                         onChange={event => {
-                            input = event.target.value;
+                            setInput(event.target.value);
                         }}
                         rows={3}
                         type={"textarea"}
                         id={"description"}
                         name={"description"}
                     />
+                    <p>
+                        Latitude: {coordinates.lat.toFixed(2)}
+                        <br/>
+                        Longitude: {coordinates.lng.toFixed(2)}
+                    </p>
                 </ModalBody>
                 <ModalFooter>
                     <ButtonComponent
@@ -46,4 +59,3 @@ export const ModalComponent = ({name, toggle, modal, handleSubmit, description})
         </>
     )
 }
-export default ModalComponent;

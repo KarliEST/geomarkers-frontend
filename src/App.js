@@ -3,14 +3,15 @@ import LocationsMap from './components/LocationsMap';
 import MapSourceSelector from './components/MapSourceSelector';
 import Maps from './resources/maps.json'
 
-function App() {
+export default function App() {
     const [mapUrl, setMapUrl] = useState(Maps[0].mapUrl);
     const [mapAttribution, setMapAttribution] = useState(Maps[0].attribution);
     const heading = "GEOLOCATIONS IN ESTONIA";
-    const handleSelectedMap = (attribution, url) => {
+
+    function handleSelectedMap(attribution, url) {
         setMapAttribution(attribution);
         setMapUrl(url);
-    };
+    }
 
     return (
         <div style={{
@@ -35,5 +36,3 @@ function App() {
         </div>
     );
 }
-
-export default App;

@@ -1,8 +1,7 @@
 import React from 'react';
 import {FormGroup, Input, Label} from 'reactstrap';
 
-const MapSourceSelector = ({maps, selectMap}) => {
-
+export default function MapSourceSelector({maps, selectMap}) {
     return (
         <FormGroup tag="fieldset">
             <legend>Map Sources:</legend>
@@ -30,4 +29,3 @@ const MapSourceSelector = ({maps, selectMap}) => {
         </FormGroup>
     );
 };
-export default MapSourceSelector;
