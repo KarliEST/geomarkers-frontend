@@ -4,11 +4,14 @@
 
 # Read Me
 
+Frontend for a webapp that displays/adds/removes/updates interactive markers on map. Markers use popup modal to display marker data(lat, long, description).
+Marker data is exchanged with app's back-end in GeoJSON format. Currently map is bound to Estonia's near region (boundary can be disabled/removed in code) and uses OpenStreetMap or Maa-amet map.
+
 * Project is made, using React and React-Leaflet / Leaflet.
 * Requests are made, using Axios.
 * Project is configured to use [proxy port: 8080](package.json)
 
-### NB! To run the project correctly, back-end project: https://github.com/KarliEST/geolocator-backend must be running on port: 8080.
+### NB! To run the project correctly, back-end project: https://github.com/KarliEST/geomarkers-backend must be running on port: 8080.
 ### NB! Project is configured to use proxy port: 8080.
 
 Before starting the project run:
