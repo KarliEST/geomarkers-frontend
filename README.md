@@ -1,11 +1,13 @@
-# GEOLOCATION PROJECT
+# GEOMARKERS PROJECT
 
 ### Project author: Karli Kullasepp.
 
 # Read Me
 
-Frontend for a webapp that displays/adds/removes/updates interactive markers on map. Markers use popup modal to display marker data(lat, long, description).
-Marker data is exchanged with app's back-end in GeoJSON format. Currently map is bound to Estonia's near region (boundary can be disabled/removed in code) and uses OpenStreetMap or Maa-amet map.
+Frontend for a webapp that displays/adds/removes/updates interactive markers on map. 
+Markers use popup modal to display marker data(lat, long, description).
+Marker data is exchanged with app's back-end in GeoJSON format. 
+Currently map is bound to Estonia's near region (boundary can be disabled/removed in code) and uses OpenStreetMap or Maa-amet map.
 
 * Project is made, using React and React-Leaflet / Leaflet.
 * Requests are made, using Axios.
